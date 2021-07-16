@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import Numbers from './Components/Numbers'
+import Phonebook from './Components/Phonebook'
 
-function App() {
+const App = () => {
+  const [ persons, setPersons ] = useState([
+    { name: 'Arto Hellas',
+      number: '040-1234567' }
+  ]) 
+  const [ newName, setNewName ] = useState('a new name...')
+  const [ newNumber, setNewNumber ] = useState('a new number...')
+  const [ filterName, setFilterName ] = useState('')
+  
+  
+  const namesToShow = filterName === '' 
+            ? persons
+            : persons.filter(person => person.name.toUpperCase().startsWith(filterName.toUpperCase()))
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Numbers persons={persons} name={newName} number={newNumber} setPerson={setPersons} setName={setNewName} setNumber={setNewNumber}/>
+      <Phonebook persons={namesToShow} setFilterName={setFilterName} />
     </div>
-  );
+  )
 }
 
 export default App;
