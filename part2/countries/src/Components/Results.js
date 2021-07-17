@@ -30,10 +30,6 @@ const Results = ( {countries, showCountry, setShowCountry} ) => {
         )
     }
 
-    // console.log('In function: ', countries)
-    // return (
-    //     <div>Hello World</div>
-    // )
     return (
         <div>
             {countries.map(country => <Result country={country} setShowCountry={setShowCountry}/>)}
