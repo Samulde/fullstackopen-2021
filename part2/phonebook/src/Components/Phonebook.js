@@ -1,20 +1,20 @@
 import React from 'react';
 import Header from './Header';
+import Person from './Person'
 
-
-const Phonebook = ({ persons, setFilterName }) => {
+const Phonebook = ({ persons, setFilterName, setPersons }) => {
     const filterChangeHandler = (event) => {
       setFilterName(event.target.value)
     }
 
     return (
         <>
-          <Header text="Phonebook" />
+          <Header text="phonebook" />
           filter shown with 
           <input onChange={filterChangeHandler}/> 
-          <Header text="add a new" />
+          <Header text="numbers" />
           <ul>
-            {persons.map(person => <li key={person.name}>{person.name} {person.number}</li>)}
+            {persons.map(person => <Person person={person} persons={persons} setPersons={setPersons}/>)}
           </ul>
         </>
     )

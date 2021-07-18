@@ -26,7 +26,7 @@ const App = () => {
   return (
     <div>
       <Numbers persons={persons} name={newName} number={newNumber} setPerson={setPersons} setName={setNewName} setNumber={setNewNumber}/>
-      <Phonebook persons={namesToShow} setFilterName={setFilterName} />
+      <Phonebook persons={namesToShow} setFilterName={setFilterName} setPersons={setPersons} />
     </div>
   )
 }

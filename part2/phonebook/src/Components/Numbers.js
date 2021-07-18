@@ -44,7 +44,7 @@ const Numbers = ({ persons, name, number, setPerson, setName, setNumber}) => {
 
     return (
         <>
-          <Header text="Numbers" />
+          <Header text="add a new" />
           <form onSubmit={addName}>
             <div>
               name: 
