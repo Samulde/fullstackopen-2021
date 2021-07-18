@@ -2,8 +2,6 @@ import React from 'react';
 import Header from './Header';
 
 
-
-
 const Phonebook = ({ persons, setFilterName }) => {
     const filterChangeHandler = (event) => {
       setFilterName(event.target.value)

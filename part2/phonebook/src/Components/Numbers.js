@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-
+import personsServices from '../services/persons.js'
 
 const Numbers = ({ persons, name, number, setPerson, setName, setNumber}) => {
 
@@ -12,15 +12,18 @@ const Numbers = ({ persons, name, number, setPerson, setName, setNumber}) => {
           return
         }
 
-        const newName = {
-          name: name,
-          number: number
-        };
+        const newPerson = { name, number };
 
         const found = persons.find(person => person.name === name)
         
         if (typeof found === 'undefined') {
-          setPerson(persons.concat(newName));
+          personsServices
+            .create(newPerson)
+            .then(data => console.log(data)
+            )
+
+          setPerson(persons.concat(newPerson));
+          
           setName('');
           setNumber('');
         } else {
