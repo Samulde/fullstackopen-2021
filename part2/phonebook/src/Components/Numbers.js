@@ -27,7 +27,17 @@ const Numbers = ({ persons, name, number, setPerson, setName, setNumber}) => {
           setName('');
           setNumber('');
         } else {
-          alert(`${name} is already added to phonebook`)
+          const result = window.confirm(`${name} is already added to phonebook, replace the old number with a new one?`)
+          const replacePersonNumber = persons.find(x => x.name === name )
+          const toUpdate = {...replacePersonNumber, "number" : number}
+          
+          personsServices
+            .update(replacePersonNumber.id, toUpdate)
+            .then(data => console.log('Successfully replaced'))
+            .catch( () => 'Failed');
+            
+          setName('');
+          setNumber('');
         }
 
     };
