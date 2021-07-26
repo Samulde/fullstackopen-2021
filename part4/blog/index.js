@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
+const logger = require('./utils/logger')
+const config = require('./utils/config')
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -13,8 +15,7 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = `mongodb://samulde:samulde123@cluster0-shard-00-00.rg4gz.mongodb.net:27017,cluster0-shard-00-01.rg4gz.mongodb.net:27017,cluster0-shard-00-02.rg4gz.mongodb.net:27017/blog?ssl=true&replicaSet=atlas-phuhlx-shard-0&authSource=admin&retryWrites=true&w=majority`
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoose.connect(config.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 app.use(cors())
 app.use(express.json())
@@ -37,7 +38,6 @@ app.post('/api/blogs', (request, response) => {
     })
 })
 
-const PORT = 3003
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+app.listen(config.PORT, () => {
+  console.info(`Server running on port ${config.PORT}`)
 })
