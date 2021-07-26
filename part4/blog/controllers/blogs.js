@@ -19,6 +19,4 @@ blog
     })
 })
 
-module.exports = {
-    blogsRouter
-}
+module.exports = blogsRouter;
