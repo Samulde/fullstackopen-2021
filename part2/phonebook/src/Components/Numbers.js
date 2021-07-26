@@ -31,6 +31,8 @@ const Numbers = ({ persons, name, number, setPerson, setName, setNumber}) => {
           const replacePersonNumber = persons.find(x => x.name === name )
           const toUpdate = {...replacePersonNumber, "number" : number}
           
+          console.log(replacePersonNumber)
+          
           personsServices
             .update(replacePersonNumber.id, toUpdate)
             .then(data => console.log('Successfully replaced'))

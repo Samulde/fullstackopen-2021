@@ -14,7 +14,7 @@ const Phonebook = ({ persons, setFilterName, setPersons }) => {
           <input onChange={filterChangeHandler}/> 
           <Header text="numbers" />
           <ul>
-            {persons.map(person => <Person person={person} persons={persons} setPersons={setPersons}/>)}
+            {persons.map(person => <Person key={person.id} person={person} persons={persons} setPersons={setPersons}/>)}
           </ul>
         </>
     )

@@ -34,7 +34,7 @@ const Anecdote = ({ selected, points }) => {
     </p>
   )
 }
-
+ 
 function App() {
 
    

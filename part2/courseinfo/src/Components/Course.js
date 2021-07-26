@@ -4,6 +4,7 @@ import Content from './Content'
 
 
 const Course = ({ courses }) => {
+    
     return (
         <div>
         {courses.map(course => {
