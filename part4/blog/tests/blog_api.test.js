@@ -41,6 +41,31 @@ test('ID is correctly defined', async () => {
   
 })
 
+test('Add new blog post', async () => {
+  const newBlog = {
+    title: "This is a test",
+    author: "Chris Samulde",
+    url: "www.abc.com",
+    likes: 13
+  }
+
+  console.log('Posting');
+  
+  const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+
+  console.log('Waiting');
+  const finalBlogList = await api
+    .get('/api/blogs')
+  
+  expect(finalBlogList.body).toHaveLength(7)
+
+  const titles = finalBlogList.body.map(t => t.title)
+  expect(titles).toContain("This is a test")
+})
+
 
 afterAll(() => {
   mongoose.connection.close()
