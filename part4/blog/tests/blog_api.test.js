@@ -125,6 +125,18 @@ test('a blog can be deleted by its id', async () => {
     expect(blogsAtEnd).toHaveLength(initialBlogs.length - 1)
 })
 
+test('likes can be updated', async () => {
+
+    const firstId = initialBlogs[0]._id
+    const updatedData = { likes: 69 }
+
+    const response = await api
+        .put(`/api/blogs/${firstId}`)
+        .send(updatedData)
+        .expect(200)
+    
+    expect(response.body.likes).toBe(updatedData.likes)
+})
 
 
 afterAll( () => {
