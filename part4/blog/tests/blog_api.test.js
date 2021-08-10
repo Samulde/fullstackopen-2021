@@ -61,6 +61,34 @@ test('blogs with likes property missing default to 0', async () => {
 
 })
 
+test ('blogs with title property missing return 400', async () => {
+    const newBlog = {
+        "author": "Blog Admin",
+        "url": "www.no-title.com",
+        "likes": 0
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+        
+})
+
+test ('blogs with url property missing return 400', async () => {
+    const newBlog = {
+        "title": "Missing URL",
+        "author": "Blog Admin",
+        "likes": 0
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+        
+})
+
 test('a valid blog can be added', async () => {
     
     const newBlog = {
