@@ -111,7 +111,18 @@ test('a valid blog can be added', async () => {
     expect(blogsAtEnd).toHaveLength(initialBlogs.length + 1)
     expect(titles).toContain('Chris')
     
+})
 
+test('a blog can be deleted by its id', async () => {
+    
+    const firstId = initialBlogs[0]._id
+
+    await api
+        .delete(`/api/blogs/${firstId}`)
+        .expect(204)
+    
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(initialBlogs.length - 1)
 })
 
 
