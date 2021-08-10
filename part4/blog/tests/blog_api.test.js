@@ -42,6 +42,25 @@ test('blogs have an id property', async () => {
     expect(blogs[0].id).toBeDefined()
 })
 
+test('blogs with likes property missing default to 0', async () => {
+    const newBlog = {
+        "title": "A blog with no likes property",
+        "author": "Blog Admin",
+        "url": "www.0-likes.com"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd[blogsAtEnd.length - 1].likes).toBe(0)
+
+})
+
 test('a valid blog can be added', async () => {
     
     const newBlog = {
