@@ -36,6 +36,12 @@ test('blogs are returned as json', async () => {
     
 }, 100000)
 
+test('blogs have an id property', async () => {
+    const blogs = await helper.blogsInDb()
+
+    expect(blogs[0].id).toBeDefined()
+})
+
 test('a valid blog can be added', async () => {
     
     const newBlog = {
