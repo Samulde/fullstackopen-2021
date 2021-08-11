@@ -3,7 +3,6 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
-
 blogRouter.get('/', async (request, response) => {
   const blogs = await Blog
     .find({})
@@ -28,7 +27,7 @@ blogRouter.post('/', async (request, response, next) => {
     return response.status(400).json({error: "url missing from payload"})
   }
 
-  const user = await User.findById(decodedToken.id)
+  const user = request.user
 
   const blog = new Blog({
     title: body.title,
@@ -68,16 +67,23 @@ blogRouter.delete('/:id', async (request, response, next) => {
     next(err)
   }
 
+  console.log(decodedToken)
+
   if (!request.token || !decodedToken.id) {    
     return response.status(401).json({ error: 'token missing or invalid' })
   }
   
   const blog = await Blog.findById(request.params.id)
 
+  if (!blog) {
+    return response.status(204).end()
+  }
+
   if (blog.user.toString() !== decodedToken.id) {
     return response.status(401).json({ error: 'invalid creditentials'})
   }
 
+  // return response.json({message: 'testing'})
   try {
     await Blog.findByIdAndRemove(request.params.id)
     response.status(204).end()
