@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
+import LoginForm from './components/Login'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Togglable from './components/Toggleable'
+import BlogForm from './components/BlogForm'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -54,78 +57,21 @@ const App = () => {
     }
   }
 
-  const AddBlog = (event) => {
+  const createBlog = ( newBlogObject ) => {
 
-    event.preventDefault()
-    blogService.create(
-      {
-        title: title,
-        author: author,
-        url: url,
-        likes: 0
-      }
-    )
+    blogService
+      .create(newBlogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+      })
 
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-    
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs ))
-      
+    blogFormRef.current.toggleVisibility()
   }
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogAppUser')
     setUser(null)
   }
-
-  const blogForm = () => (
-    <>
-      <h2>Create new</h2>
-      <form onSubmit={AddBlog}>
-        Title: <input
-          value={title}
-          onChange={ ({target}) => setTitle(target.value)}
-        /><br/>    
-        Author: <input
-          value={author}
-          onChange={ ({target}) => setAuthor(target.value)}
-        /><br/>
-        url: <input
-          value={url}
-          onChange={ ({target}) => setUrl(target.value)} 
-        /><br/>
-
-        <button type="submit">create</button>
-      </form>
-      <button onClick={handleLogout}>
-        logout
-      </button>
-    </>
-  )
-
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-        type="text"
-        value={username}
-        name="Username"
-        onChange={ ({target}) => setUsername(target.value)} />
-      </div>
-      <div>
-        password
-        <input
-        type="text"
-        value={password}
-        name="Password"
-        onChange={( {target} ) => setPassword(target.value)} />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  )
 
   const blogList = () => (
     <>
@@ -136,6 +82,31 @@ const App = () => {
     </>
   )
 
+  const loginForm = () => (
+    <Togglable buttonLabel='login'>
+      <LoginForm
+        username={username}
+        password={password}
+        handleUsernameChange={({ target }) => setUsername(target.value)}
+        handlePasswordChange={ ({ target}) => setPassword(target.value)}
+        handleSumbit={handleLogin}
+      />
+    </Togglable>
+  )
+
+  const blogForm = () => (
+    <Togglable buttonLabel='add blog' ref={blogFormRef}>
+      <BlogForm createBlog={createBlog} />
+    </Togglable>
+
+  )
+
+  const logout = () => (
+    <button onClick={handleLogout}>
+      logout
+    </button>
+  )
+
   return (
     <div>
       
@@ -144,6 +115,7 @@ const App = () => {
         : blogForm()
       }
 
+      {user !== null && logout()}
       {user !== null && blogList()}
 
     </div>
