@@ -2,7 +2,7 @@ const initialMessage = "First Message"
 
 
 const notificationReducer = ( state = initialMessage, action) => {
-
+    console.log(action)
     switch (action.type) {
         case 'CHANGE_MESSAGE' :
             return action.message
