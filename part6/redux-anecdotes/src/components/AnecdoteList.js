@@ -5,7 +5,17 @@ import { messageChange } from '../reducers/notificationReducer';
 
 const AnecdoteList = () => {
 
-  const anecdotes = useSelector(state => state.anecdotes).sort((a, b) => a.votes > b.votes ? -1 : 1)
+  const anecdotes = useSelector(state => {
+    return state.filter
+    ? state.anecdotes
+      .filter(anecdote => anecdote.content.includes(state.filter))
+      .sort((a,b) => a.votes > b.votes ? -1 : 1)  
+    : state.anecdotes.sort((a,b) => b.votes - a.votes)
+
+    }
+  )
+    
+    // state.anecdotes).sort((a, b) => a.votes > b.votes ? -1 : 1)
   const dispatch = useDispatch()
 
   const vote = (id, content) => {
