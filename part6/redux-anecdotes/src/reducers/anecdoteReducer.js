@@ -36,6 +36,7 @@ const reducer = (state = initialState, action) => {
     case 'CREATE':
       console.log(action.data)
       return state.concat(action.data)
+      
     default:
       return state
   }
