@@ -1,8 +1,8 @@
 const initialMessage = "First Message"
 
+let timeId = null
 
 const notificationReducer = ( state = initialMessage, action) => {
-    console.log(action)
     switch (action.type) {
         case 'CHANGE_MESSAGE' :
             return action.message
@@ -19,12 +19,14 @@ export const messageChange = (message, time) => {
             message
         })
 
-        setTimeout(() => {
+        clearTimeout(timeId)
+        timeId = setTimeout(() => {
             dispatch({
                 type: 'CHANGE_MESSAGE',
                 message: null
             })
         }, time * 1000)
+
 }}
 
 export default notificationReducer
