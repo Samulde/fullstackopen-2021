@@ -11,11 +11,20 @@ const notificationReducer = ( state = initialMessage, action) => {
     }
 }
 
-export const messageChange = message => {
-    return {
-        type: 'CHANGE_MESSAGE',
-        message
-    }
-}
+export const messageChange = (message, time) => {
+    return async dispatch => {
+
+        dispatch({
+            type: 'CHANGE_MESSAGE',
+            message
+        })
+
+        setTimeout(() => {
+            dispatch({
+                type: 'CHANGE_MESSAGE',
+                message: null
+            })
+        }, time * 1000)
+}}
 
 export default notificationReducer
