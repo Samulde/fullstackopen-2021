@@ -18,14 +18,14 @@ const AnecdoteList = () => {
     // state.anecdotes).sort((a, b) => a.votes > b.votes ? -1 : 1)
   const dispatch = useDispatch()
 
-  const vote = (id, content) => {
-    console.log('vote', id)
-    dispatch(messageChange('You\'ve voted for ' + content))
+  const vote = (anecdote) => {
+    console.log('vote', anecdote.id)
+    dispatch(messageChange('You\'ve voted for ' + anecdote.content))
     setTimeout(() => {
       dispatch(messageChange(null))
     }, 3000)
 
-    dispatch(incrementVote(id))
+    dispatch(incrementVote(anecdote))
   }
 
   return (
@@ -36,7 +36,7 @@ const AnecdoteList = () => {
         </div>
         <div>
           has {anecdote.votes}
-          <button onClick={() => vote(anecdote.id, anecdote.content)}>vote</button>
+          <button onClick={() => vote(anecdote)}>vote</button>
         </div>
       </div>
       ))
