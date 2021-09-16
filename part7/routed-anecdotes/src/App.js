@@ -63,9 +63,9 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const content = useField('content')
-  const author = useField('author')
-  const info = useField('info')
+  const { reset: resetContent, ...content} = useField('content')
+  const { reset: resetAuthor, ...author} = useField('author')
+  const { reset: resetInfo, ...info} = useField('info')
   const history = useHistory()
 
   const handleSubmit = (e) => {
@@ -81,6 +81,13 @@ const CreateNew = (props) => {
     setTimeout( () => props.setNotification(), 10000)
   }
 
+  const resetValues = (e) => {
+    e.preventDefault()
+    resetContent()
+    resetAuthor()
+    resetInfo()
+  }
+  
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -97,8 +104,10 @@ const CreateNew = (props) => {
           url for more info
           <input {...info} />
         </div>
-        <button>create</button>
+        <button type='submit'>create</button>
+        <button onClick={resetValues}>reset</button>
       </form>
+      
     </div>
   )
 
