@@ -32,7 +32,13 @@ const calculateExercises = (hoursPerWeek: Array<number>, target:number): exercis
   }
 }
 
+const target:number = Number(process.argv[2])
+const trainingHours:Array<number> = []
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1] ,2))
+for (let i = 3; i < process.argv.length; i++) {
+  trainingHours.push(Number(process.argv[i]))
+}
+
+console.log(calculateExercises(trainingHours, target))
 
 
