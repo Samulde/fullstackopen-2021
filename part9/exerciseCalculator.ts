@@ -41,4 +41,4 @@ for (let i = 3; i < process.argv.length; i++) {
 
 console.log(calculateExercises(trainingHours, target));
 
-
+export default calculateExercises
