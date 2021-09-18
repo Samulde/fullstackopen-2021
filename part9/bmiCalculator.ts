@@ -28,3 +28,5 @@ const height: number = Number(process.argv[2])
 const mass: number = Number(process.argv[3])
 
 console.log(bmiCalculator(height, mass))
+
+export default bmiCalculator
